@@ -6,15 +6,12 @@
 #define DEP_MAX 101
 
 
-
-
-
 void *worker_department(void *i)
 {
     pid_t   thread_pid;
 
     thread_pid = getpid();
-    printf("voici le pidss %d et le thread number %d\n", thread_pid, *(int *)i);
+    printf("voici le pids %d et le thread number %d\n", thread_pid, *(int *)i);
     return(NULL);
 }
 
@@ -42,46 +39,26 @@ int get_french_departement(int i, int *is_corse)
     }
     return (departement);
 }
-int main()
-{
-    int     dep_count;
-    int     departement;
+#include <stdlib.h>
 
-    pthread_t dep[DEP_MAX];
-    pid_t thread_pid;
+int main() {
 
-    thread_pid = getpid();
-    printf("voici le pid %d\n", thread_pid);
+    
+    int status = system("cd ../oee && npm run dev");
 
-    int i;
-    int is_corse;
-
-    dep_count = DEP_MAX;
-    is_corse = 0;
-    i = 1;
-    while (i < DEP_MAX)
-    {
-        
-        departement = get_french_departement(i,&is_corse);
-        pthread_create(&dep[i], NULL, worker_department, &departement);
-        usleep(10000);
-        if(departement == 200)
-            continue;
-        else
-            i++;
+    if (status == -1) {
+        perror("system");
+        return 1;
     }
-    i = 0;
-    is_corse = 0;
-    while (i < dep_count)
+    else
     {
-        departement = get_french_departement(i,&is_corse);
-        pthread_join(dep[i], NULL);
-        usleep(10000);
-        printf("thread number %d joint\n",  departement);
-        if(departement == 200)
-            continue;
-        else
-            i++;
+        printf("\nvoici le status %d\n", status);
+
     }
-    return(0);
+    //status = system("cd ../oee && make clean");
+    // if (status == -1) {
+    //     perror("system");
+    //     return 1;
+    // }
+    return 0;
 }

@@ -11,7 +11,7 @@ OBJS_MAIN = $(SRC_MAIN: %.c=%.o)
 $(NAME): $(OBJS_MAIN)
 	$(CC) $(GFLAGS) $(OBJS_MAIN) -o $(NAME)
 
-run: $(NAME)
+run: 
 	./$(NAME)
 
 clean:
